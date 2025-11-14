@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    // 1. Spring Boot 플러그인 추가 (필수)
+    id 'org.springframework.boot' version '3.2.0' // Spring Boot 버전은 최신 안정 버전으로 조정하세요
+    // 2. Spring 의존성 관리 플러그인 추가 (필수)
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'fast-cloud'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17' // Java 버전 명시
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // ----------------------------------------------------
+    // Core Web & API Communication
+    // ----------------------------------------------------
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // 비동기 처리를 위한 WebFlux (JClouds와 별개로 SDK 비동기 호출 시 유용)
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // ----------------------------------------------------
+    // OpenStack SDK (수정됨)
+    // ----------------------------------------------------
+    // JClouds 대신 OpenStack4j 사용 (Nova, Swift 모두 지원)
+    implementation 'com.github.openstack4j.core:openstack4j:3.12' // 최신 안정 버전 확인 필요
+
+    // ----------------------------------------------------
+    // Database Connectivity & Security
+    // ----------------------------------------------------
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // ----------------------------------------------------
+    // Monitoring & Operations (비기능 요구사항 충족)
+    // ----------------------------------------------------
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // ----------------------------------------------------
+    // Utilities & Development
+    // ----------------------------------------------------
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}

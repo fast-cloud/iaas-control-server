@@ -1,0 +1,20 @@
+# ----------------------------------------------------
+# DATABASE (DataSource) CONFIGURATION
+# ----------------------------------------------------
+spring:
+  # ⭐️ 이 부분이 DataSource 오류를 해결합니다.
+  datasource:
+    url: jdbc:mysql://localhost:3306/fast_cloud_iaas_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8
+    username: your_username
+    password: your_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # ----------------------------------------------------
+  # JPA & HIBERNATE SETTINGS (권장)
+  # ----------------------------------------------------
+  jpa:
+    hibernate:
+      # 'update': @Entity 클래스에 맞게 DB 테이블 자동 변경/생성
+      ddl-auto: update
+    # 실행되는 SQL 쿼리를 로그로 보여줍니다. (개발 시 유용)
+    show-sql: true
