@@ -11,6 +11,7 @@ version = '1.0-SNAPSHOT'
 
 java {
     sourceCompatibility = '17' // Java 버전 명시
+    targetCompatibility = '17'
 }
 
 configurations {
