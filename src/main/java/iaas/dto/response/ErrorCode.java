@@ -12,6 +12,7 @@ public enum ErrorCode {
 	MISSING_REQUIRED_HEADER(40001, "필수 헤더가 누락되었습니다."),
 	MISSING_REQUIRED_PARAMETER(40002, "필수 파라미터가 누락되었습니다."),
 	INVALID_PARAMETER(40003, "유효하지 않은 파라미터입니다."),
+	SWIFT_API_ERROR(40004, "SwiftAPI Server 오류가 발생했습니다."),
 
 	//401 Unauthorized
 	UNAUTHORIZED_SOCIAL_TOKEN(40100, "유효하지 않은 소셜 토큰입니다."),
