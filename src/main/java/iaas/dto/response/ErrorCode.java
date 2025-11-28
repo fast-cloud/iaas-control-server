@@ -30,12 +30,14 @@ public enum ErrorCode {
 	ROOM_NOT_FOUND(40403, "존재하지 않는 방입니다."),
 	USER_NOT_FOUND(40404, "존재하지 않는 유저입니다."),
 	ENTITY_NOT_FOUND(40405, "요청한 리소스를 찾을 수 없습니다."),
+	BUCKET_NOT_FOUND(40410, "버킷을 찾을 수 없습니다."),
 
 	//405 Method Not Allowed
 	METHOD_NOT_ALLOWED(40500, "해당 요청은 지원되지 않습니다."),
 
 	//409 Conflict
 	USER_ALREADY_REGISTERED(40900, "이미 가입된 사용자입니다."),
+	DUPLICATE_BUCKET_NAME(40901, "이미 존재하는 버킷 이름입니다."),
 
 	//422 Unprocessable Entity
 	UNSUPPORTED_SOCIAL_PROVIDER(42200, "지원하지 않는 소셜 로그인 제공자입니다."),

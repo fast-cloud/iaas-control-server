@@ -4,7 +4,6 @@ import iaas.dto.request.BucketCreateRequestDto;
 import iaas.dto.response.ApiResponseDto;
 import iaas.dto.response.BucketCreateResponseDto;
 import iaas.dto.response.BucketStatusResponseDto;
-import iaas.dto.response.ErrorCode;
 import iaas.dto.response.SuccessCode;
 import iaas.service.BucketService;
 import jakarta.validation.Valid;
@@ -29,14 +28,8 @@ public class BucketController {
 	public ApiResponseDto<BucketCreateResponseDto> createBucket(
 			@Valid @RequestBody BucketCreateRequestDto requestDto,
 			@RequestHeader("X-User-Id") String ownerUserId) {
-		try {
-			BucketCreateResponseDto response = bucketService.createBucket(requestDto, ownerUserId);
-			return ApiResponseDto.success(SuccessCode.BUCKET_CREATE_SUCCESS, response);
-		} catch (IllegalArgumentException e) {
-			return ApiResponseDto.fail(ErrorCode.BAD_REQUEST);
-		} catch (RuntimeException e) {
-			return ApiResponseDto.fail(ErrorCode.INTERNAL_SERVER_ERROR);
-		}
+		BucketCreateResponseDto response = bucketService.createBucket(requestDto, ownerUserId);
+		return ApiResponseDto.success(SuccessCode.BUCKET_CREATE_SUCCESS, response);
 	}
 
 	/**
@@ -51,14 +44,8 @@ public class BucketController {
 	public ApiResponseDto<BucketStatusResponseDto> getBucketStatus(
 			@RequestParam String bucket,
 			@RequestHeader("X-User-Id") String ownerUserId) {
-		try {
-			BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, ownerUserId);
-			return ApiResponseDto.success(SuccessCode.BUCKET_SEARCH_SUCCESS, response);
-		} catch (jakarta.persistence.EntityNotFoundException e) {
-			return ApiResponseDto.fail(ErrorCode.NOT_FOUND);
-		} catch (Exception e) {
-			return ApiResponseDto.fail(ErrorCode.INTERNAL_SERVER_ERROR);
-		}
+		BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, ownerUserId);
+		return ApiResponseDto.success(SuccessCode.BUCKET_SEARCH_SUCCESS, response);
 	}
 
 

@@ -5,7 +5,7 @@ import iaas.dto.response.InstanceResponseData;
 import iaas.dto.response.TemplateDto;
 import iaas.entity.Instance;
 import iaas.entity.Template;
-import iaas.exception.EntityFuckException;
+import jakarta.persistence.EntityNotFoundException;
 import iaas.repository.InstanceRepository;
 import iaas.repository.TemplateRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +50,7 @@ public class InstanceService {
         
         // Template 조회
         Template template = templateRepository.findById(request.getTemplateId())
-                .orElseThrow(() -> new EntityFuckException("Template not found: " + request.getTemplateId()));
+                .orElseThrow(() -> new EntityNotFoundException("Template not found: " + request.getTemplateId()));
         
         // 1단계: DB에 BUILD 상태로 저장
         Instance instance = new Instance();
@@ -112,7 +112,7 @@ public class InstanceService {
     @Transactional
     public void updateInstanceStatus(String instanceId, String status, String openstackUuid, String ipAddress) {
         Instance instance = instanceRepository.findById(instanceId)
-                .orElseThrow(() -> new EntityFuckException("Instance not found: " + instanceId));
+                .orElseThrow(() -> new EntityNotFoundException("Instance not found: " + instanceId));
         
         instance.setCachedStatus(status);
         if (openstackUuid != null && !openstackUuid.isEmpty()) {
