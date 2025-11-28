@@ -7,6 +7,8 @@ import iaas.dto.response.ObjectDto;
 import iaas.entity.Bucket;
 import iaas.repository.BucketRepository;
 import jakarta.persistence.EntityNotFoundException;
+import iaas.exception.EntityFuckException;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openstack4j.api.OSClient.OSClientV3;
@@ -186,6 +188,7 @@ public class BucketService {
 
 		public LocalDateTime getLastModified() {
 			return lastModified;
+
 		}
 	}
 }

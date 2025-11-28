@@ -37,3 +37,4 @@ openstack:
   domain:
     # OpenStack 도메인 이름
     name: your_domain_name
+

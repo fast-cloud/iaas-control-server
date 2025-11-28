@@ -29,6 +29,7 @@ public enum ErrorCode {
 	HOUSE_NOT_FOUND(40402, "존재하지 않는 매물입니다."),
 	ROOM_NOT_FOUND(40403, "존재하지 않는 방입니다."),
 	USER_NOT_FOUND(40404, "존재하지 않는 유저입니다."),
+	ENTITY_NOT_FOUND(40405, "요청한 리소스를 찾을 수 없습니다."),
 
 	//405 Method Not Allowed
 	METHOD_NOT_ALLOWED(40500, "해당 요청은 지원되지 않습니다."),
@@ -43,6 +44,7 @@ public enum ErrorCode {
 	INTERNAL_SERVER_ERROR(50000, "서버 내부 오류입니다."),
 	DATABASE_CONNECTION_ERROR(50001, "데이터베이스 연결 오류입니다."),
 	LOGOUT_FAILED(50002, "로그아웃 처리 중 오류가 발생했습니다."),
+	OPENSTACK_API_ERROR(50003, "OpenStack API 호출 중 오류가 발생했습니다."),
 
 	//503 Service Unavailable
 	SERVICE_UNAVAILABLE(50300, "서비스를 이용할 수 없습니다.");
