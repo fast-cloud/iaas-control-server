@@ -34,8 +34,8 @@ dependencies {
     // ----------------------------------------------------
     // OpenStack SDK (수정됨)
     // ----------------------------------------------------
-    // JClouds 대신 OpenStack4j 사용 (Nova, Swift 모두 지원)
-    implementation 'com.github.openstack4j.core:openstack4j:3.12' // 최신 안정 버전 확인 필요
+    implementation 'com.github.openstack4j.core:openstack4j:3.12'
+
 
     // ----------------------------------------------------
     // Database Connectivity & Security
@@ -57,6 +57,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -18,3 +18,14 @@ spring:
       ddl-auto: update
     # 실행되는 SQL 쿼리를 로그로 보여줍니다. (개발 시 유용)
     show-sql: true
+
+openstack:
+  auth:
+    url: http://<YOUR_KEYSTONE_IP>:5000/v3
+  user:
+    name: your_username
+    password: your_password
+  project:
+    name: your_project_name
+  domain:
+    name: Default
