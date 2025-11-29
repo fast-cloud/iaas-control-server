@@ -4,9 +4,9 @@
 spring:
   # ⭐️ 이 부분이 DataSource 오류를 해결합니다.
   datasource:
-    url: jdbc:mysql://localhost:3306/fast_cloud_iaas_db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF8
-    username: your_username
-    password: your_password
+    url: jdbc:mysql://mysql-iaas:3306/iaas?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=UTF8
+    username: admin
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   # ----------------------------------------------------
@@ -24,17 +24,15 @@ spring:
 # ----------------------------------------------------
 openstack:
   auth:
-    # Keystone 인증 엔드포인트 URL (예: http://your-keystone-endpoint:5000/v3)
-    url: http://your-keystone-endpoint:5000/v3
+    url: http://192.168.0.101/identity/v3
   user:
     # OpenStack 사용자 이름
-    name: your_username
+    name: admin
     # OpenStack 사용자 비밀번호
-    password: your_password
+    password: 1234
   project:
     # OpenStack 프로젝트 이름
-    name: your_project_name
+    name: admin
   domain:
     # OpenStack 도메인 이름
-    name: your_domain_name
-
+    name: default

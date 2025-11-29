@@ -50,9 +50,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponseDto<?>> handleValidationException(MethodArgumentNotValidException e) {
-        log.error("Validation Error: {}", e.getMessage());
         FieldError fieldError = e.getBindingResult().getFieldError();
         String message = fieldError != null ? fieldError.getDefaultMessage() : "유효하지 않은 요청입니다.";
+        log.error("Validation Error: {}", message);
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ApiResponseDto.fail(ErrorCode.INVALID_PARAMETER));
@@ -130,4 +130,3 @@ public class GlobalExceptionHandler {
         }
     }
 }
-

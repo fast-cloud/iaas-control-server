@@ -14,21 +14,8 @@ public enum ErrorCode {
 	INVALID_PARAMETER(40003, "유효하지 않은 파라미터입니다."),
 	SWIFT_API_ERROR(40004, "SwiftAPI Server 오류가 발생했습니다."),
 
-	//401 Unauthorized
-	UNAUTHORIZED_SOCIAL_TOKEN(40100, "유효하지 않은 소셜 토큰입니다."),
-	NEED_SOCIAL_SIGNUP(40101, "회원가입이 필요한 사용자입니다."),
-	INVALID_REFRESH_TOKEN(40102, "유효하지 않은 RefreshToken입니다."),
-	USER_NOT_FOUND_FOR_REFRESH(40103, "유저 정보가 존재하지 않습니다. RefreshToken이 무효합니다."),
-
-	//403 Forbidden
-	ACCESS_DENIED(40300, "권한이 없습니다."),
-
 	//404 Not Found
 	NOT_FOUND(40400, "존재하지 않는 API입니다."),
-	NOT_FOUND_HOUSE(40401, "존재하지 않는 매물 ID 입니다."),
-	HOUSE_NOT_FOUND(40402, "존재하지 않는 매물입니다."),
-	ROOM_NOT_FOUND(40403, "존재하지 않는 방입니다."),
-	USER_NOT_FOUND(40404, "존재하지 않는 유저입니다."),
 	ENTITY_NOT_FOUND(40405, "요청한 리소스를 찾을 수 없습니다."),
 	BUCKET_NOT_FOUND(40410, "버킷을 찾을 수 없습니다."),
 
@@ -36,16 +23,11 @@ public enum ErrorCode {
 	METHOD_NOT_ALLOWED(40500, "해당 요청은 지원되지 않습니다."),
 
 	//409 Conflict
-	USER_ALREADY_REGISTERED(40900, "이미 가입된 사용자입니다."),
 	DUPLICATE_BUCKET_NAME(40901, "이미 존재하는 버킷 이름입니다."),
-
-	//422 Unprocessable Entity
-	UNSUPPORTED_SOCIAL_PROVIDER(42200, "지원하지 않는 소셜 로그인 제공자입니다."),
 
 	//500 Internal Server Error
 	INTERNAL_SERVER_ERROR(50000, "서버 내부 오류입니다."),
 	DATABASE_CONNECTION_ERROR(50001, "데이터베이스 연결 오류입니다."),
-	LOGOUT_FAILED(50002, "로그아웃 처리 중 오류가 발생했습니다."),
 	OPENSTACK_API_ERROR(50003, "OpenStack API 호출 중 오류가 발생했습니다."),
 
 	//503 Service Unavailable

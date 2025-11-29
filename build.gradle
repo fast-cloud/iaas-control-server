@@ -10,6 +10,9 @@ group = 'fast-cloud'
 version = '1.0-SNAPSHOT'
 
 java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
     sourceCompatibility = '17' // Java 버전 명시
     targetCompatibility = '17'
 }
@@ -43,7 +46,8 @@ dependencies {
     // ----------------------------------------------------
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Spring Security 비활성화 (테스트용)
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     // ----------------------------------------------------
@@ -55,13 +59,14 @@ dependencies {
     // ----------------------------------------------------
     // Utilities & Development
     // ----------------------------------------------------
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+    // JWT 의존성 제거 (테스트용)
+    // implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    // runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    // runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
