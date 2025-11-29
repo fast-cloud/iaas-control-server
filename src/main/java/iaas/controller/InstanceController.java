@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/iaas/compute")
+@RequestMapping("/compute")
 @RequiredArgsConstructor
 public class InstanceController {
 
@@ -29,20 +29,16 @@ public class InstanceController {
      * 테스트용: 하드코딩된 userId 사용
      */
     @GetMapping
-    public ResponseEntity<ApiResponseDto<List<InstanceResponseData>>> getInstances() {
+    public ApiResponseDto<List<InstanceResponseData>> getInstances() {
         String userId = TEST_USER_ID;
         
-        log.info("GET /iaas/compute - userId: {}", userId);
-        
+        log.info("GET /compute - userId: {}", userId);
         List<InstanceResponseData> instances = instanceService.getInstances(userId);
-        
-        return ResponseEntity.ok(
-                ApiResponseDto.success(SuccessCode.INSTANCE_LIST_SUCCESS, instances)
-        );
+        return ApiResponseDto.success(SuccessCode.INSTANCE_LIST_SUCCESS, instances);
     }
 
     /**
-     * 시퀀스 다이어그램 3: POST /iaas/compute - 인스턴스 생성 요청
+     * 시퀀스 다이어그램 3: POST /compute - 인스턴스 생성 요청
      * 
      * HTTP 202 Accepted를 반환합니다.
      * - 생성 시작은 즉시 반환 (비동기)
@@ -56,7 +52,7 @@ public class InstanceController {
         
         String userId = TEST_USER_ID;
         
-        log.info("POST /iaas/compute - userId: {}, request: {}", userId, request);
+        log.info("POST /compute - userId: {}, request: {}", userId, request);
         
         InstanceResponseData instance = instanceService.createInstance(request, userId);
         
@@ -65,4 +61,3 @@ public class InstanceController {
                 .body(ApiResponseDto.success(SuccessCode.INSTANCE_CREATE_ACCEPTED, instance));
     }
 }
-
