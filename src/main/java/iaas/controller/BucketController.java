@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/iaas/bucket")
+@RequestMapping("bucket")
 @AllArgsConstructor
 public class BucketController {
 	private final BucketService bucketService;
@@ -51,6 +51,4 @@ public class BucketController {
 		BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, ownerUserId);
 		return ApiResponseDto.success(SuccessCode.BUCKET_SEARCH_SUCCESS, response);
 	}
-
-
 }

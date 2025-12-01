@@ -40,7 +40,7 @@ public class InstanceService {
     }
 
     /**
-     * 시퀀스 다이어그램 3: POST /iaas/compute - 인스턴스 생성 요청
+     * 시퀀스 다이어그램 3: POST /compute - 인스턴스 생성 요청
      * 1단계: DB에 "BUILD" 상태로 저장
      * 2단계: 비동기로 OpenStack에 VM 생성 요청
      */
