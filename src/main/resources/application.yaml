@@ -19,6 +19,12 @@ spring:
     # 실행되는 SQL 쿼리를 로그로 보여줍니다. (개발 시 유용)
     show-sql: true
 
+  # 정적 리소스 핸들러 설정
+  web:
+    resources:
+      # 정적 리소스 자동 설정 비활성화 (API 전용 서버)
+      add-mappings: false
+
 # ----------------------------------------------------
 # OpenStack Swift API Configuration
 # ----------------------------------------------------
@@ -36,3 +42,8 @@ openstack:
   domain:
     # OpenStack 도메인 이름
     name: default
+  swift:
+    # Swift API 서버 IP 주소
+    ip: 192.168.0.101
+    # Swift API 포트
+    port: 8080

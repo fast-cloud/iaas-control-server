@@ -10,7 +10,7 @@ import iaas.exception.DuplicateBucketException;
 import iaas.exception.SwiftApiException;
 import iaas.repository.BucketRepository;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openstack4j.api.OSClient.OSClientV3;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BucketService {
-	private BucketRepository bucketRepository;
-	private OSClientV3 openstackClient;
+	private final BucketRepository bucketRepository;
+	private final OSClientV3 openstackClient;
 
 	/**
 	 * SwiftAPI Server에 컨테이너 생성 요청

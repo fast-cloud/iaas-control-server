@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("bucket")
+@RequestMapping("/bucket")
 @AllArgsConstructor
 public class BucketController {
 	private final BucketService bucketService;
