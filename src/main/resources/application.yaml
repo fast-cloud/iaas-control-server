@@ -43,7 +43,5 @@ openstack:
     # OpenStack 도메인 이름
     name: default
   swift:
-    # Swift API 서버 IP 주소
-    ip: 192.168.0.101
-    # Swift API 포트
+    ip: 192.168.0.102
     port: 8080

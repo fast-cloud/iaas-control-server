@@ -3,52 +3,52 @@ package iaas.controller;
 import iaas.dto.request.BucketCreateRequestDto;
 import iaas.dto.response.ApiResponseDto;
 import iaas.dto.response.BucketCreateResponseDto;
+import iaas.dto.response.BucketListResponseDto;
 import iaas.dto.response.BucketStatusResponseDto;
 import iaas.dto.response.SuccessCode;
 import iaas.service.BucketService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bucket")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BucketController {
+
 	private final BucketService bucketService;
 
+	// 테스트용 하드코딩된 사용자 ID (인증 구현 시 JWT/세션으로 교체)
+	private static final String TEST_USER_ID = "test-user-id";
+
 	/**
-	 * 버킷 생성
-	 * POST /iaas/bucket
-	 * 
-	 * 테스트용: 하드코딩된 userId 사용
-	 * 
-	 * @param requestDto 버킷 생성 요청 DTO
-	 * @return 생성된 버킷 정보
+	 * POST /iaas/bucket — 버킷 생성
 	 */
 	@PostMapping
 	public ApiResponseDto<BucketCreateResponseDto> createBucket(
 			@Valid @RequestBody BucketCreateRequestDto requestDto) {
-		// 테스트용 하드코딩된 사용자 ID
-		String ownerUserId = "test-user-id";
-		BucketCreateResponseDto response = bucketService.createBucket(requestDto, ownerUserId);
+		BucketCreateResponseDto response = bucketService.createBucket(requestDto, TEST_USER_ID);
 		return ApiResponseDto.success(SuccessCode.BUCKET_CREATE_SUCCESS, response);
 	}
 
 	/**
-	 * 버킷 현황 조회 (시퀀스 다이어그램 반영)
-	 * GET /iaas/bucket?bucket=버킷이름
-	 * 
-	 * 테스트용: 하드코딩된 userId 사용
-	 * 
-	 * @param bucket 버킷 이름 (Query Parameter)
-	 * @return 버킷 현황 정보 (버킷 이름 및 파일 목록)
+	 * GET /iaas/bucket — 자신의 버킷 목록 조회
 	 */
 	@GetMapping
+	public ApiResponseDto<List<BucketListResponseDto>> listBuckets() {
+		List<BucketListResponseDto> response = bucketService.listBuckets(TEST_USER_ID);
+		return ApiResponseDto.success(SuccessCode.BUCKET_LIST_SUCCESS, response);
+	}
+
+	/**
+	 * GET /iaas/bucket?bucket={name} — 버킷 내 파일 목록 조회
+	 */
+	@GetMapping(params = "bucket")
 	public ApiResponseDto<BucketStatusResponseDto> getBucketStatus(
 			@RequestParam String bucket) {
-		// 테스트용 하드코딩된 사용자 ID
-		String ownerUserId = "test-user-id";
-		BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, ownerUserId);
+		BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, TEST_USER_ID);
 		return ApiResponseDto.success(SuccessCode.BUCKET_SEARCH_SUCCESS, response);
 	}
 }

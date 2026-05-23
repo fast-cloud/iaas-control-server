@@ -28,47 +28,33 @@ repositories {
 }
 
 dependencies {
-    // ----------------------------------------------------
-    // Core Web & API Communication
-    // ----------------------------------------------------
+    // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // 비동기 처리를 위한 WebFlux (JClouds와 별개로 SDK 비동기 호출 시 유용)
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    // ----------------------------------------------------
-    // OpenStack SDK (수정됨)
-    // ----------------------------------------------------
-    implementation 'com.github.openstack4j.core:openstack4j:3.12'
+    // OpenStack Swift SDK
+    // jackson, snakeyaml 제외 → Spring Boot 3.x 관리 버전과 충돌 방지
+    implementation('com.github.openstack4j.core:openstack4j:3.12') {
+        exclude group: 'com.fasterxml.jackson.core'
+        exclude group: 'com.fasterxml.jackson.datatype'
+        exclude group: 'com.fasterxml.jackson.module'
+        exclude group: 'org.yaml', module: 'snakeyaml'
+    }
 
-
-    // ----------------------------------------------------
-    // Database Connectivity & Security
-    // ----------------------------------------------------
+    // Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.mysql:mysql-connector-j'
-    // Spring Security 비활성화 (테스트용)
-    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // ----------------------------------------------------
-    // Monitoring & Operations (비기능 요구사항 충족)
-    // ----------------------------------------------------
+    // Monitoring
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
 
-    // ----------------------------------------------------
-    // Utilities & Development
-    // ----------------------------------------------------
+    // Utilities
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    // JWT 의존성 제거 (테스트용)
-    // implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
-    // runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
-    // runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'
-
-    // Testing
+    // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
