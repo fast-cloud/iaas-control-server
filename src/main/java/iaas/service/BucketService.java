@@ -4,7 +4,9 @@ import iaas.dto.request.BucketCreateRequestDto;
 import iaas.dto.response.BucketCreateResponseDto;
 import iaas.dto.response.BucketListResponseDto;
 import iaas.dto.response.BucketStatusResponseDto;
+import iaas.dto.response.BucketUploadResponseDto;
 import iaas.dto.response.ObjectDto;
+import iaas.dto.response.UploadedFileDto;
 import iaas.entity.Bucket;
 import iaas.exception.BucketNotFoundException;
 import iaas.exception.DuplicateBucketException;
@@ -15,12 +17,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openstack4j.api.OSClient.OSClientV3;
 import org.openstack4j.model.common.Identifier;
+import org.openstack4j.model.common.Payloads;
+import org.openstack4j.model.storage.object.options.ObjectPutOptions;
 import org.openstack4j.openstack.OSFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -125,6 +132,52 @@ public class BucketService {
 						.createdAt(bucket.getCreatedAt())
 						.build())
 				.collect(Collectors.toList());
+	}
+
+	public BucketUploadResponseDto uploadFiles(String bucketName, List<MultipartFile> files, String ownerUserId) throws SwiftApiException {
+		bucketRepository.findByBucketNameAndOwnerUserId(bucketName, ownerUserId)
+				.orElseThrow(() -> new BucketNotFoundException(bucketName, ownerUserId));
+
+		OSClientV3 osClient = createOpenStackClient();
+		List<UploadedFileDto> uploadedFiles = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			String objectName = file.getOriginalFilename();
+			String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
+			try {
+				osClient.objectStorage().objects().put(
+						bucketName,
+						objectName,
+						Payloads.create(file.getInputStream()),
+						ObjectPutOptions.create().contentType(contentType)
+				);
+			} catch (IOException e) {
+				throw new SwiftApiException("파일 업로드", objectName, e);
+			}
+
+			org.openstack4j.model.storage.object.SwiftObject uploaded =
+					osClient.objectStorage().objects().get(bucketName, objectName);
+
+			LocalDateTime lastModified = uploaded.getLastModified() != null
+					? uploaded.getLastModified().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+					: LocalDateTime.now();
+
+			uploadedFiles.add(UploadedFileDto.builder()
+					.name(objectName)
+					.bytes(uploaded.getSizeInBytes())
+					.contentType(uploaded.getMimeType())
+					.etag(uploaded.getETag())
+					.lastModified(lastModified)
+					.build());
+
+			log.info("파일 업로드 완료: bucket={}, file={}", bucketName, objectName);
+		}
+
+		return BucketUploadResponseDto.builder()
+				.bucket(bucketName)
+				.uploadCount(uploadedFiles.size())
+				.files(uploadedFiles)
+				.build();
 	}
 
 	public BucketStatusResponseDto getBucketStatus(String bucketName, String ownerUserId) throws SwiftApiException {

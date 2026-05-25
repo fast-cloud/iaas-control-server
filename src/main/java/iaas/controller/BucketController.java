@@ -5,11 +5,14 @@ import iaas.dto.response.ApiResponseDto;
 import iaas.dto.response.BucketCreateResponseDto;
 import iaas.dto.response.BucketListResponseDto;
 import iaas.dto.response.BucketStatusResponseDto;
+import iaas.dto.response.BucketUploadResponseDto;
 import iaas.dto.response.SuccessCode;
 import iaas.service.BucketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -50,5 +53,16 @@ public class BucketController {
 			@RequestParam String bucket) {
 		BucketStatusResponseDto response = bucketService.getBucketStatus(bucket, TEST_USER_ID);
 		return ApiResponseDto.success(SuccessCode.BUCKET_SEARCH_SUCCESS, response);
+	}
+
+	/**
+	 * POST /iaas/bucket/upload — 버킷에 파일 업로드
+	 */
+	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ApiResponseDto<BucketUploadResponseDto> uploadFiles(
+			@RequestParam String bucket,
+			@RequestParam("files") List<MultipartFile> files) {
+		BucketUploadResponseDto response = bucketService.uploadFiles(bucket, files, TEST_USER_ID);
+		return ApiResponseDto.success(SuccessCode.BUCKET_UPLOAD_SUCCESS, response);
 	}
 }
